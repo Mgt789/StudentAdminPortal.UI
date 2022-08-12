@@ -13,8 +13,8 @@ import { StudentService } from './student.service';
 export class StudentsComponent implements OnInit {
 
   students: Student[] = [];
-  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email', 'mobile', 'gender'];
-
+  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email', 'mobile', 'gender','edit'];
+// id:any
   dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>();
 
   @ViewChild(MatPaginator) matPaginator!: MatPaginator;
@@ -26,9 +26,10 @@ export class StudentsComponent implements OnInit {
 
   ngOnInit(): void {
     //Fetch Student
-    this.StudentService.getStudent()
+    this.StudentService.getStudents()
       .subscribe(
         (successResponse) => {
+          console.log(successResponse);
           this.students = successResponse;
           this.dataSource=new MatTableDataSource<Student>(this.students);
 
@@ -51,5 +52,10 @@ export class StudentsComponent implements OnInit {
     this.dataSource.filter=this.filterString.trim().toLowerCase();
   }
 
-
+//   student(id:any)
+//   {
+//     this.StudentService.getStudent(id).subscribe ((res) => {
+//       console.log(res);
+//   });
+// }
 }
